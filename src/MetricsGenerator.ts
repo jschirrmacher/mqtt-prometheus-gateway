@@ -3,7 +3,7 @@ type LabelList = Record<string, string | number>
 
 function object2label(obj: LabelList) {
   return Object.entries(obj)
-    .map(([key, val]) => `${key}=${val}`)
+    .map(([key, val]) => `${key}="${val}"`)
     .join(", ")
 }
 
