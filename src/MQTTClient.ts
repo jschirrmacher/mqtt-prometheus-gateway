@@ -3,23 +3,35 @@ import { metrics } from "./MetricsModel"
 
 const user = process.env.MQTT_USER
 const pwd = process.env.MQTT_PASSWORD
-const server = process.env.MQTT_SERVER || "localhost"
+const brokerName = process.env.MQTT_BROKER || "localhost"
 const port = process.env.MQTT_PORT || "1883"
 const auth = user && pwd ? `${user}:${pwd}@` : ""
+const topic = process.env.MQTT_TOPIC
 
-const client = mqtt.connect(`mqtt://${auth}${server}:${port}`)
+if (!topic) {
+  throw Error("Environment variable MQTT_TOPIC not set - aborting")
+}
+
+const client = mqtt.connect(`mqtt://${auth}${brokerName}:${port}`)
 client.on("connect", () => {
-  console.log("Connection established")
-  client.subscribe("tele/tasmota_D9740F/SENSOR", (err) => {
-    console.log("subscribed", err)
+  console.info(`Connection to mqtt://${brokerName}:${port} established`)
+  client.subscribe(topic, (err) => {
+    if (err) {
+      console.error("Subscription failed:", err)
+    } else {
+      console.info("Topic subscribed, waiting for data...")
+    }
   })
 })
 
-client.on("message", (topic, message) => {
+client.on("message", (_, message) => {
   const payload = JSON.parse(message.toString())
   const { Meter_number, Total, voltage, current } = payload.STROM
   Object.assign(metrics, { Meter_number, Total, voltage, current })
-  console.log(Object.values(metrics).join(" "))
+  console.debug(Object.values(metrics).join(" "))
 })
 
 client.on("error", (error) => console.error({ error }))
+client.on("disconnect", () =>
+  console.info(`mqtt://${brokerName}:${port} disconnected`)
+)
