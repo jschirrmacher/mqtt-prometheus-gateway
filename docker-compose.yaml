@@ -1,0 +1,39 @@
+version: "3.7"
+services:
+  tasprogw:
+    image: node:18-alpine
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command:
+      - node
+      - -r
+      - ts-node/register
+      - tasprogw
+
+  mosquitto:
+    image: eclipse-mosquitto
+    volumes:
+      - ./mosquitto/config/:/mosquitto/config
+      - ./mosquitto/log/:/mosquitto/log
+      - ./mosquitto/data/:/mosquitto/data
+    ports:
+      - "1883:1883"
+
+  prometheus:
+    image: prom/prometheus:latest
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=1y'
+      - '--web.enable-lifecycle'
+    volumes:
+      - ./prometheus/data:/prometheus:rw
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana
+    volumes:
+      - ./grafana/data:/var/lib/grafana:rw
