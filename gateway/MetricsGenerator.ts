@@ -1,6 +1,6 @@
-import type { LabelList, MetricType } from "./types"
+import type { BaseType, LabelList, SingleConfiguration } from "./types"
 import { metrics } from "./MetricsModel"
-import { Config } from "./types"
+import { MetricsConfiguration } from "./types"
 
 function object2label(obj: LabelList) {
   return Object.entries(obj)
@@ -9,35 +9,31 @@ function object2label(obj: LabelList) {
 }
 
 function createMetric(
-  name: string,
-  description: string,
-  type: MetricType,
+  config: SingleConfiguration,
   value: string | number,
   labels: Record<string, string | number> = {}
 ) {
   const labelInfo = object2label(labels)
-  const entry = labelInfo ? name + "{" + labelInfo + "}" : name
+  const entry = labelInfo ? config.name + "{" + labelInfo + "}" : config.name
   return (
-    `# HELP ${name} ${description}\n` +
-    `# TYPE ${name} ${type}\n` +
+    `# HELP ${config.name} ${config.description}\n` +
+    `# TYPE ${config.name} ${config.type}\n` +
     `${entry} ${value}\n\n`
   )
 }
 
-export default function getMetrics(config: Config) {
+export default function getMetrics(config: MetricsConfiguration) {
   return config.metrics
     .map((config) => {
       const labels = Object.fromEntries(
-        Object.entries(config.labels).map(([key, path]) => [key, metrics[config.topic][path]])
-      )
+        Object.entries(config.labels).map(([key, path]) => [
+          key,
+          metrics[config.topic][path],
+        ])
+      ) as LabelList
+      const value = metrics[config.topic][config.path] as BaseType
 
-      return createMetric(
-        config.name,
-        config.description,
-        config.type,
-        metrics[config.topic][config.path],
-        labels
-      )
+      return createMetric(config, value, labels)
     })
     .join("")
 }

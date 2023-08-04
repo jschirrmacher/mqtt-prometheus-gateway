@@ -1,3 +1,7 @@
-import type { BaseType, Path, Topic } from "./types"
+import type { BaseType, Topic } from "./types"
 
-export const metrics: Record<Topic, Record<Path, BaseType>> = {}
+interface Folder {
+  [key: string]: BaseType | Folder
+}
+
+export const metrics: Record<Topic, Folder> = {}
