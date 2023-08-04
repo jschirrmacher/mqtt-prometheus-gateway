@@ -10,7 +10,7 @@ services:
       - -r
       - ts-node/register
       - gateway
-    requires:
+    depends_on:
       - mosquitto
 
   mosquitto:
@@ -34,8 +34,12 @@ services:
     volumes:
       - ./prometheus/data:/prometheus:rw
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - gateway
 
   grafana:
     image: grafana/grafana
     volumes:
       - ./grafana/data:/var/lib/grafana:rw
+    depends_on:
+      - prometheus

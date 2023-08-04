@@ -1,6 +1,6 @@
 import mqtt from "mqtt"
 import { metrics } from "./MetricsModel"
-import { Config } from "./types"
+import { type BaseType, Config } from "./types"
 import { flatten } from "useful-typescript-functions"
 
 const user = process.env.MQTT_USER
@@ -33,11 +33,9 @@ export default function (config: Config) {
   })
   
   client.on("message", (topic, message) => {
-    const payload = JSON.parse(message.toString())
-    const values = flatten(payload)
+    const values = flatten(JSON.parse(message.toString()))
     console.log(topic, values)
-    const { Meter_number, Total, voltage, current } = payload.STROM
-    Object.assign(metrics, { Meter_number, Total, voltage, current })
+    metrics[topic] = values as Record<string, BaseType>
   })
   
   client.on("error", (error) => console.error({ error }))
