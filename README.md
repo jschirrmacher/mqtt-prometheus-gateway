@@ -1,6 +1,6 @@
-# tasmota-prometheus-gateway
+# mqtt-prometheus-gateway
 
-A gateway listening on MQTT packets to obtain information from a tasmota sensor to measure an electric power meter and publish it as a prometheus metric.
+A gateway listening on MQTT packets to obtain information from sensors and publish it as a prometheus metric.
 
 ![Screenshot](./screenshot.png)
 
@@ -12,7 +12,9 @@ I use a [Mosquitto](https://mosquitto.org/) message broker, [Prometheus](https:/
 
 ![Architecture diagram](./architecture.drawio.png)
 
-Mosquitto, Prometheus, Grafana and the tasmota-prometheus-gateway tool are run in a docker environment. You can find a [docker compose file here](./docker-compose.yaml). It uses some configuration files I've included here as a starting point.
+In the meantime, I've added a gas meter sensor, which also uses a ESP8266, but a reed relay to measure the turns of the meter's wheel. So I expanded the tool to be more configurable which MQTT topics to subscribe and to which Prometheus metrics to publish the data.
+
+Mosquitto, Prometheus, Grafana and the mqtt-prometheus-gateway tool are run in a docker environment. You can find a [docker compose file here](./docker-compose.yaml). It uses some configuration files I've included here as a starting point.
 
 To run this, you need NodeJS >= version 18. Install dependencies, and run the docker compose file:
 
@@ -27,8 +29,8 @@ To use only the gateway utility itself locally, you need NodeJS >= version 18.
 
 Clone the repository and install the dependencies:
 
-    git clone https://github.com/jschirrmacher/tasmota-prometheus-gateway.git
-    cd tasmota-prometheus-gateway
+    git clone https://github.com/jschirrmacher/mqtt-prometheus-gateway.git
+    cd mqtt-prometheus-gateway
     npm install
 
 Next, copy the `.env.template` file to `.env.local` and edit this new file to match your needs.

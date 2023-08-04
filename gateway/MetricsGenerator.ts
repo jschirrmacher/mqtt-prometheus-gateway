@@ -1,5 +1,4 @@
-type MetricType = "counter" | "gauge" | "histogram" | "summary"
-type LabelList = Record<string, string | number>
+import type { LabelList, MetricType } from "./types"
 
 function object2label(obj: LabelList) {
   return Object.entries(obj)

@@ -1,6 +1,6 @@
 version: "3.7"
 services:
-  tasprogw:
+  gateway:
     image: node:18-alpine
     volumes:
       - ./:/app
@@ -9,7 +9,9 @@ services:
       - node
       - -r
       - ts-node/register
-      - tasprogw
+      - gateway
+    requires:
+      - mosquitto
 
   mosquitto:
     image: eclipse-mosquitto

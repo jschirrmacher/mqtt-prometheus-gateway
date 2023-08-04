@@ -1,0 +1,33 @@
+metrics:
+  - name: electric_meter_total
+    description: The total kWh measured by an electric meter
+    type: counter
+    topic: tele/tasmota_D9740F/SENSOR
+    path: STROM.metrics.Total
+    labels:
+      meter: STROM.metrics.Meter_number
+  - name: electric_meter_voltage
+    description: The voltage measured
+    type: gauge
+    topic: tele/tasmota_D9740F/SENSOR
+    path: STROM.metrics.voltage
+    labels:
+      meter: STROM.metrics.Meter_number
+  - name: electric_meter_current
+    description: The electric current measured
+    type: gauge
+    topic: tele/tasmota_D9740F/SENSOR
+    path: STROM.metrics.current
+    labels:
+      meter: STROM.metrics.Meter_number
+  
+  - name: gas_meter_voltage
+    description: The relay's voltage
+    type: gauge
+    topic: /gas-counter
+    path: voltage
+  - name: gas_meter_total
+    description: measured amount of gas (m^3 gas)
+    type: gauge
+    topic: /gas-counter
+    path: totals

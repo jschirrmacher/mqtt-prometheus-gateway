@@ -1,10 +1,10 @@
 {
-  "name": "tasmota-prometheus-gateway",
+  "name": "mqtt-prometheus-gateway",
   "version": "1.0.0",
   "description": "",
-  "main": "tasprogw/index.ts",
+  "main": "gateway/index.ts",
   "scripts": {
-    "start": "ts-node tasprogw",
+    "start": "ts-node gateway",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -16,7 +16,9 @@
     "express": "^4.18.1",
     "mqtt": "^4.3.7",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "useful-typescript-functions": "^1.8.1",
+    "yaml": "^2.3.1"
   },
   "devDependencies": {
     "@types/dotenv-flow": "3.2.0",
