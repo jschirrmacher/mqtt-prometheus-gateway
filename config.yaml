@@ -1,3 +1,4 @@
+---
 metrics:
   - name: electric_meter_total
     description: The total kWh measured by an electric meter

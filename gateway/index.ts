@@ -1,7 +1,6 @@
 import { config } from "dotenv-flow"
 config()
 import readConfig from "./Config"
-
 import { httpServer } from "./HTTPServer"
 import getMetrics from "./MetricsGenerator"
 import setupMQTTClient from "./MQTTClient"

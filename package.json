@@ -5,7 +5,8 @@
   "main": "gateway/index.ts",
   "scripts": {
     "start": "ts-node gateway",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest",
+    "test:ci": "vitest --coverage"
   },
   "keywords": [],
   "author": "Joachim Schirrmacher",
@@ -23,6 +24,7 @@
   "devDependencies": {
     "@types/dotenv-flow": "3.2.0",
     "@types/express": "4.17.17",
+    "@vitest/coverage-v8": "0.34.1",
     "vitest": "0.34.1"
   }
 }
