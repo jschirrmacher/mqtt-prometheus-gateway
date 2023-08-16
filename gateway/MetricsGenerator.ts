@@ -22,18 +22,27 @@ function createMetric(
   )
 }
 
-export default function getMetrics(config: MetricsConfiguration) {
-  return config.metrics
-    .map((config) => {
-      const labels = Object.fromEntries(
-        Object.entries(config.labels).map(([key, path]) => [
-          key,
-          metrics[config.topic][path],
-        ])
-      ) as LabelList
-      const value = metrics[config.topic][config.path] as BaseType
+function getLabels(config: SingleConfiguration) {
+  return Object.fromEntries(
+    Object.entries(config.labels || {}).map(([key, path]) => [
+      key,
+      metrics[config.topic][path as string],
+    ])
+  ) as LabelList
+}
 
-      return createMetric(config, value, labels)
-    })
+function getValue(config: SingleConfiguration) {
+  return metrics[config.topic][config.path as string] as BaseType
+}
+
+export default function getMetrics(config: MetricsConfiguration) {
+  config.metrics
+    .map((config) => config.topic)
+    .filter((topic) => !metrics[topic])
+    .forEach((topic) => console.warn(`path '${topic}' not found in metrics`))
+
+  return config.metrics
+    .filter((config) => metrics[config.topic])
+    .map((config) => createMetric(config, getValue(config), getLabels(config)))
     .join("")
 }
