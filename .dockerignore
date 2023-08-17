@@ -1,0 +1,7 @@
+/node_modules
+/dist
+/data*
+/.vscode
+*.local
+/grafana
+/prometheus

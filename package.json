@@ -1,14 +1,25 @@
 {
   "name": "mqtt-prometheus-gateway",
   "version": "2.0.0",
-  "description": "",
-  "main": "gateway/index.ts",
+  "description": "A gateway listening on MQTT packets to obtain information from sensors and publish it as prometheus metrics",
   "scripts": {
-    "start": "ts-node gateway",
-    "test": "vitest",
-    "test:ci": "vitest --coverage"
+    "dev": "ts-node gateway",
+    "start": "node .",
+    "test": "vitest --run",
+    "test:ci": "vitest --coverage",
+    "test:watch": "vitest",
+    "build": "tsc",
+    "docker:build": "docker build -t joschi64/mqtt-prometheus-gateway:latest .",
+    "docker:run": "docker run -it -v $(pwd)/config.yaml:/config.yaml -v $(pwd)/.env.local:/app/.env joschi64/mqtt-prometheus-gateway:latest"
   },
-  "keywords": [],
+  "keywords": [
+    "mqtt",
+    "mqtt-client",
+    "prometheus",
+    "gateway",
+    "nodejs",
+    "typescript"
+  ],
   "author": "Joachim Schirrmacher",
   "license": "MIT",
   "dependencies": {
@@ -18,7 +29,7 @@
     "mqtt": "^4.3.7",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.0",
-    "useful-typescript-functions": "^1.8.1",
+    "useful-typescript-functions": "^2.0.0",
     "yaml": "^2.3.1"
   },
   "devDependencies": {
