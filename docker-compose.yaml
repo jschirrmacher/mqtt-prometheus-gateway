@@ -1,6 +1,6 @@
 version: "3.7"
 services:
-  tasprogw:
+  gateway:
     image: node:18-alpine
     volumes:
       - ./:/app
@@ -9,7 +9,9 @@ services:
       - node
       - -r
       - ts-node/register
-      - tasprogw
+      - gateway
+    depends_on:
+      - mosquitto
 
   mosquitto:
     image: eclipse-mosquitto
@@ -32,8 +34,12 @@ services:
     volumes:
       - ./prometheus/data:/prometheus:rw
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - gateway
 
   grafana:
     image: grafana/grafana
     volumes:
       - ./grafana/data:/var/lib/grafana:rw
+    depends_on:
+      - prometheus

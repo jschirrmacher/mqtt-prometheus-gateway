@@ -1,6 +1,6 @@
-# tasmota-prometheus-gateway
+# mqtt-prometheus-gateway
 
-A gateway listening on MQTT packets to obtain information from a tasmota sensor to measure an electric power meter and publish it as a prometheus metric.
+A gateway listening on MQTT packets to obtain information from sensors and publish it as a prometheus metric.
 
 ![Screenshot](./screenshot.png)
 
@@ -12,7 +12,28 @@ I use a [Mosquitto](https://mosquitto.org/) message broker, [Prometheus](https:/
 
 ![Architecture diagram](./architecture.drawio.png)
 
-Mosquitto, Prometheus, Grafana and the tasmota-prometheus-gateway tool are run in a docker environment. You can find a [docker compose file here](./docker-compose.yaml). It uses some configuration files I've included here as a starting point.
+In the meantime, I've added a gas meter sensor, which also uses a ESP8266, but a reed relay to measure the turns of the meter's wheel. So I expanded the tool to be more configurable which MQTT topics to subscribe and to which Prometheus metrics to publish the data.
+
+## Configuration
+
+MQTT and HTTP configuration is made in an `.env` file. A template can be found in the root folder. Copy and adapt it to match your own configuration:
+
+    cp .env.template .env
+
+The configuration about MQTT topic subscriptions and the mapping of topic data to Prometheus metrics is done in `config.yaml`. The file provided contains my own settings and can be adapted as you need it.
+
+The file is formatted as YAML, containing only one entry "metrics" which contains a list of mappings. Each mapping has the following fields:
+
+- **name**: Prometheus metrics name
+- **description**: A description what the metrics value means. This is shown in Prometheus
+- **type**: The [Prometheus metrics type](https://prometheus.io/docs/concepts/metric_types/)
+- **topic**: The MQTT topic path to subscribe to (may be used for multiple metrics)
+- **path**: Path to single value in MQTT topic
+- **labels**: Labels to add to the Prometheus metric. These are also key / path pairs, with the path being the source of the actual value in the MQTT topic
+
+## Run a complete setup in docker
+
+Mosquitto, Prometheus, Grafana and the mqtt-prometheus-gateway tool are run in a docker environment. You can find a [docker compose file here](./docker-compose.yaml). It uses some configuration files I've included here as a starting point.
 
 To run this, you need NodeJS >= version 18. Install dependencies, and run the docker compose file:
 
@@ -27,11 +48,15 @@ To use only the gateway utility itself locally, you need NodeJS >= version 18.
 
 Clone the repository and install the dependencies:
 
-    git clone https://github.com/jschirrmacher/tasmota-prometheus-gateway.git
-    cd tasmota-prometheus-gateway
+    git clone https://github.com/jschirrmacher/mqtt-prometheus-gateway.git
+    cd mqtt-prometheus-gateway
     npm install
 
 Next, copy the `.env.template` file to `.env.local` and edit this new file to match your needs.
 Then, start the program:
 
     npm start
+
+## Metrics endpoint
+
+Metrics are served under http://localhost:PORT/metrics with the PORT from the `.env` file.

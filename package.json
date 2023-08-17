@@ -1,11 +1,12 @@
 {
-  "name": "tasmota-prometheus-gateway",
-  "version": "1.0.0",
+  "name": "mqtt-prometheus-gateway",
+  "version": "2.0.0",
   "description": "",
-  "main": "tasprogw/index.ts",
+  "main": "gateway/index.ts",
   "scripts": {
-    "start": "ts-node tasprogw",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ts-node gateway",
+    "test": "vitest",
+    "test:ci": "vitest --coverage"
   },
   "keywords": [],
   "author": "Joachim Schirrmacher",
@@ -16,10 +17,14 @@
     "express": "^4.18.1",
     "mqtt": "^4.3.7",
     "ts-node": "^10.9.1",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "useful-typescript-functions": "^1.8.1",
+    "yaml": "^2.3.1"
   },
   "devDependencies": {
     "@types/dotenv-flow": "3.2.0",
-    "@types/express": "4.17.17"
+    "@types/express": "4.17.17",
+    "@vitest/coverage-v8": "0.34.1",
+    "vitest": "0.34.1"
   }
 }
