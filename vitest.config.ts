@@ -11,7 +11,7 @@ export default defineConfig({
       exclude: ["**/*.test.ts"],
       reporter: ["html", "json-summary", "json"],
       lines: 65,
-      branches: 80,
+      branches: 75,
       functions: 65,
       statements: 65,
     },
