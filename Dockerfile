@@ -17,4 +17,4 @@ COPY --from=build /build /app
 
 ENV NODE_ENV=production
 
-CMD npm start
+CMD ["node", "."]
