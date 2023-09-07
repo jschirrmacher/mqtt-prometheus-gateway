@@ -1,4 +1,5 @@
-import actualMqtt, { type MqttClient } from "mqtt"
+import * as actualMqtt from "mqtt"
+import { type MqttClient } from "mqtt"
 import { flatten } from "useful-typescript-functions"
 import { metrics } from "./MetricsModel"
 import { type BaseType, MetricsConfiguration } from "./types"
@@ -54,7 +55,7 @@ export default function (
   })
 
   client.on("error", (error) => logger.error({ error }))
-  
+
   client.on("disconnect", () =>
     logger.info(`mqtt://${brokerName}:${port} disconnected`)
   )
