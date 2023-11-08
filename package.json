@@ -34,7 +34,7 @@
     "yaml": "^2.3.4"
   },
   "devDependencies": {
-    "@types/dotenv-flow": "3.3.2",
+    "@types/dotenv-flow": "3.3.3",
     "@types/express": "4.17.21",
     "@vitest/coverage-v8": "^0.34.6",
     "vitest": "0.34.6"
