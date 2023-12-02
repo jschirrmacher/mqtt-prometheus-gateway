@@ -59,4 +59,4 @@ Then, start the program:
 
 ## Metrics endpoint
 
-Metrics are served under http://localhost:PORT/metrics with the PORT from the `.env` file.
+Metrics are served under <http://localhost:PORT/metrics> with the PORT from the `.env` file.
