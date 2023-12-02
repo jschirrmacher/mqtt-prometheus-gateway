@@ -12,7 +12,7 @@ I use a [Mosquitto](https://mosquitto.org/) message broker, [Prometheus](https:/
 
 ![Architecture diagram](./architecture.drawio.png)
 
-In the meantime, I've added a gas meter sensor, which also uses a ESP8266, but a reed relay to measure the turns of the meter's wheel. So I expanded the tool to be more configurable which MQTT topics to subscribe and to which Prometheus metrics to publish the data.
+In the meantime, I've added a gas meter sensor, which also uses a ESP8266, but a reed relay to measure the turns of the meter's wheel. So I expanded the tool to be more configurable which MQTT topics to subscribe and to which Prometheus metrics to publish the data. Also, I've added a HY001 temperature sensor which measures the outside temperature.
 
 ## Configuration
 

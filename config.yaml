@@ -23,12 +23,29 @@ metrics:
       meter: STROM.Meter_number
   
   - name: gas_meter_voltage
-    description: The relay's voltage
+    description: The relay's voltage [V]
     type: gauge
-    topic: /gas-counter
+    topic: tele/gas_meter/SENSOR
     path: voltage
-  - name: gas_meter_total
-    description: measured amount of gas (m^3 gas)
-    type: count
-    topic: /gas-counter
-    path: total
+  - name: gas_meter_counter
+    description: measured amount of gas [1/100 m^3]
+    type: counter
+    topic: tele/gas_meter/SENSOR
+    path: counter
+
+  - name: gas_meter_wifi_fails
+    description: Number of failed wifi connections
+    type: counter
+    topic: tele/gas_meter/SENSOR
+    path: fails.wifi
+  - name: gas_meter_mqtt_fails
+    description: Number of failed connections to MQTT server
+    type: counter
+    topic: tele/gas_meter/SENSOR
+    path: fails.mqtt
+
+  - name: outside_temperature
+    description: The current outside temperature [°C]
+    type: gauge
+    topic: tele/gas_meter/SENSOR
+    path: temperature
