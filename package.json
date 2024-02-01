@@ -30,7 +30,7 @@
     "mqtt": "^5.3.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
-    "useful-typescript-functions": "^4.0.1",
+    "useful-typescript-functions": "^4.0.2",
     "yaml": "^2.3.4"
   },
   "devDependencies": {
