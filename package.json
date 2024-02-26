@@ -31,7 +31,7 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
     "useful-typescript-functions": "^4.0.7",
-    "yaml": "^2.3.4"
+    "yaml": "^2.4.0"
   },
   "devDependencies": {
     "@types/dotenv-flow": "3.3.3",
