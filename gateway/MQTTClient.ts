@@ -18,6 +18,10 @@ interface Logger {
   debug: (msg: string | object) => void
 }
 
+const regExStr = "d{4}-d{2}-d{2}Td{2}:d{2}:d{2}Z"
+const dateTimeRegEx = new RegExp(regExStr)
+const invalidDateTimeRegEx = new RegExp('(?<!")' + regExStr + '(?!")', "g")
+
 export default function (
   config: MetricsConfiguration,
   mqtt: MQTT = actualMqtt,
@@ -49,13 +53,15 @@ export default function (
   })
 
   client.on("message", (topic, message) => {
-    const rawData = message.toString().replaceAll(/(?<!\")(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z)(?!\")/, "\"$1\"")
-    const values = flatten(JSON.parse(rawData, (_, value) => {
-      if (typeof value === "string" && value.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/)) {
-        return new Date(value)
-      }
-      return value
-    }))
+    const rawData = message.toString().replaceAll(invalidDateTimeRegEx, '"$1"')
+    const values = flatten(
+      JSON.parse(rawData, (_, value) => {
+        if (typeof value === "string" && value.match(dateTimeRegEx)) {
+          return new Date(value)
+        }
+        return value
+      })
+    )
     logger.debug({ topic, values })
     metrics[topic] = values as Record<string, BaseType>
   })
