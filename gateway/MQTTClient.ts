@@ -49,7 +49,13 @@ export default function (
   })
 
   client.on("message", (topic, message) => {
-    const values = flatten(JSON.parse(message.toString()))
+    const rawData = message.toString().replaceAll(/(?<!\")(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z)(?!\")/, "\"$1\"")
+    const values = flatten(JSON.parse(rawData, (_, value) => {
+      if (typeof value === "string" && value.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/)) {
+        return new Date(value)
+      }
+      return value
+    }))
     logger.debug({ topic, values })
     metrics[topic] = values as Record<string, BaseType>
   })
