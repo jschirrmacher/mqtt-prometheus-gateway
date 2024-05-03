@@ -18,9 +18,9 @@ interface Logger {
   debug: (msg: string | object) => void
 }
 
-const regExStr = "d{4}-d{2}-d{2}Td{2}:d{2}:d{2}Z"
+const regExStr = "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"
 const dateTimeRegEx = new RegExp(regExStr)
-const invalidDateTimeRegEx = new RegExp('(?<!")' + regExStr + '(?!")', "g")
+const invalidDateTimeRegEx = new RegExp('(?<!")(' + regExStr + ')(?!")', "g")
 
 export default function (
   config: MetricsConfiguration,
