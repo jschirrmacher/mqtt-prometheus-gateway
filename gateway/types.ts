@@ -1,3 +1,5 @@
+import { LogLevel } from "useful-typescript-functions"
+
 export type MetricType = "counter" | "gauge" | "histogram" | "summary"
 export type Topic = string
 export type Path = string
@@ -15,5 +17,6 @@ export type SingleConfiguration = {
 }
 
 export type MetricsConfiguration = {
+  logLevel?: LogLevel
   metrics: SingleConfiguration[]
 }

@@ -1,27 +1,28 @@
 ---
+logLevel: info
 metrics:
   - name: electric_meter_total
     description: The total kWh measured by an electric meter
     type: counter
-    topic: tele/tasmota_D9740F/SENSOR
-    path: STROM.Total
+    topic: tele/electric_meter/SENSOR
+    path: power.total
     labels:
-      meter: STROM.Meter_number
+      meter: power.meter
   - name: electric_meter_voltage
     description: The voltage measured
     type: gauge
-    topic: tele/tasmota_D9740F/SENSOR
-    path: STROM.voltage
+    topic: tele/electric_meter/SENSOR
+    path: power.voltage
     labels:
-      meter: STROM.Meter_number
+      meter: power.meter
   - name: electric_meter_current
     description: The electric current measured
     type: gauge
-    topic: tele/tasmota_D9740F/SENSOR
-    path: STROM.current
+    topic: tele/electric_meter/SENSOR
+    path: power.current
     labels:
-      meter: STROM.Meter_number
-  
+      meter: power.meter
+
   - name: gas_meter_voltage
     description: The relay's voltage [V]
     type: gauge
@@ -49,3 +50,25 @@ metrics:
     type: gauge
     topic: tele/gas_meter/SENSOR
     path: temperature
+
+  - name: gas_meter_voltage_2
+    description: The relay's voltage [V]
+    type: gauge
+    topic: tele/gas_meter/2/SENSOR
+    path: voltage
+  - name: gas_meter_counter_2
+    description: measured amount of gas [1/100 m^3]
+    type: counter
+    topic: tele/gas_meter/2/SENSOR
+    path: counter
+
+  - name: gas_meter_wifi_fails_2
+    description: Number of failed wifi connections
+    type: counter
+    topic: tele/gas_meter/2/SENSOR
+    path: fails.wifi
+  - name: gas_meter_mqtt_fails_2
+    description: Number of failed connections to MQTT server
+    type: counter
+    topic: tele/gas_meter/2/SENSOR
+    path: fails.mqtt
