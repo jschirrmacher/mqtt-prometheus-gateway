@@ -58,7 +58,7 @@ jobs:
 
       - name: 'Report Coverage'
         if: always() # Also generate the report if tests are failing
-        uses:  davelosert/vitest-coverage-report-action@v1
+        uses:  davelosert/vitest-coverage-report-action@v2
 
   deploy-to-docker:
     runs-on: ubuntu-latest
@@ -75,7 +75,7 @@ jobs:
 
       - name: Docker meta
         id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@v4
+        uses: crazy-max/ghaction-docker-meta@v5
         with:
           images: joschi64/mqtt-prometheus-gateway
 
