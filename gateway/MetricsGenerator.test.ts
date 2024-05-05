@@ -3,35 +3,31 @@ import getMetrics from "./MetricsGenerator"
 import { MetricsConfiguration } from "./types"
 import { metrics } from "./MetricsModel"
 
-const config: MetricsConfiguration = {
-  metrics: [
-    {
-      name: "test",
-      description: "A test metric",
-      type: "gauge",
-      topic: "/my-topic",
-      path: "folder.key",
-      labels: {
-        label1: "label-1",
-        label2: "folder.label-2",
-      },
+const config: MetricsConfiguration[] = [
+  {
+    name: "test",
+    description: "A test metric",
+    type: "gauge",
+    topic: "/my-topic",
+    path: "folder.key",
+    labels: {
+      label1: "label-1",
+      label2: "folder.label-2",
     },
-  ],
-}
+  },
+]
 
-const config2: MetricsConfiguration = {
-  metrics: [
-    config.metrics[0],
-    {
-      name: "test-2",
-      description: "Another metric",
-      type: "counter",
-      topic: "/my-topic",
-      path: "other",
-      labels: {},
-    },
-  ],
-}
+const config2: MetricsConfiguration[] = [
+  config[0],
+  {
+    name: "test-2",
+    description: "Another metric",
+    type: "counter",
+    topic: "/my-topic",
+    path: "other",
+    labels: {},
+  },
+]
 
 metrics["/my-topic"] = {
   "label-1": "first label",

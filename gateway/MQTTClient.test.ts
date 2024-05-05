@@ -9,26 +9,24 @@ const mqtt: MQTT = {
   connect: vi.fn().mockReturnValue({ subscribe, on }),
 }
 
-const config: MetricsConfiguration = {
-  metrics: [
-    {
-      name: "test1",
-      description: "A first test metric",
-      type: "gauge",
-      topic: "/topic1",
-      path: "key1",
-      labels: {},
-    },
-    {
-      name: "test2",
-      description: "A second test metric",
-      type: "gauge",
-      topic: "/topic2",
-      path: "key2",
-      labels: {},
-    },
-  ],
-}
+const config: MetricsConfiguration[] = [
+  {
+    name: "test1",
+    description: "A first test metric",
+    type: "gauge",
+    topic: "/topic1",
+    path: "key1",
+    labels: {},
+  },
+  {
+    name: "test2",
+    description: "A second test metric",
+    type: "gauge",
+    topic: "/topic2",
+    path: "key2",
+    labels: {},
+  },
+]
 
 process.env.MQTT_BROKER = "my-broker.localhost"
 process.env.MQTT_PORT = "1234"
@@ -73,12 +71,14 @@ describe("MQTTClient", () => {
     expect(metrics).toEqual({ "/topic1": { test: 42 } })
   })
 
-  describe("should log", () => { 
+  describe("should log", () => {
     it("successful subscriptions", () => {
       MQTTClient(config, mqtt, logger)
       getHandler<() => void>("connect")()
       subscribe.mock.calls.at(0)[1]()
-      expect(logger.info).toBeCalledWith(`Topic '/topic1' subscribed, waiting for data...`)
+      expect(logger.info).toBeCalledWith(
+        `Topic '/topic1' subscribed, waiting for data...`
+      )
     })
 
     it("subscription errors", () => {
