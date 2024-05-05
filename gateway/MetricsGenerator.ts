@@ -1,6 +1,5 @@
-import type { BaseType, LabelList, SingleConfiguration } from "./types"
+import type { BaseType, LabelList, MetricsConfiguration } from "./types"
 import { metrics } from "./MetricsModel"
-import { MetricsConfiguration } from "./types"
 
 function object2label(obj: LabelList) {
   return Object.entries(obj)
@@ -9,7 +8,7 @@ function object2label(obj: LabelList) {
 }
 
 function createMetric(
-  config: SingleConfiguration,
+  config: MetricsConfiguration,
   value: string | number,
   labels: Record<string, string | number> = {}
 ) {
@@ -22,7 +21,7 @@ function createMetric(
   )
 }
 
-function getLabels(config: SingleConfiguration) {
+function getLabels(config: MetricsConfiguration) {
   return Object.fromEntries(
     Object.entries(config.labels || {}).map(([key, path]) => [
       key,
@@ -31,17 +30,17 @@ function getLabels(config: SingleConfiguration) {
   ) as LabelList
 }
 
-function getValue(config: SingleConfiguration) {
+function getValue(config: MetricsConfiguration) {
   return metrics[config.topic][config.path as string] as BaseType
 }
 
-export default function getMetrics(config: MetricsConfiguration) {
-  config.metrics
+export default function getMetrics(config: MetricsConfiguration[]) {
+  config
     .map((config) => config.topic)
     .filter((topic) => !metrics[topic])
     .forEach((topic) => console.warn(`path '${topic}' not found in metrics`))
 
-  return config.metrics
+  return config
     .filter((config) => metrics[config.topic])
     .map((config) => createMetric(config, getValue(config), getLabels(config)))
     .join("")

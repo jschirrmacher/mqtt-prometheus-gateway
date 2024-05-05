@@ -7,7 +7,7 @@ export type BaseType = string | number
 
 export type LabelList = Record<string, BaseType>
 
-export type SingleConfiguration = {
+export type MetricsConfiguration = {
   name: string
   description: string
   type: MetricType
@@ -16,7 +16,7 @@ export type SingleConfiguration = {
   labels: LabelList
 }
 
-export type MetricsConfiguration = {
+export type Configuration = {
   logLevel?: LogLevel
-  metrics: SingleConfiguration[]
+  metrics: MetricsConfiguration[]
 }

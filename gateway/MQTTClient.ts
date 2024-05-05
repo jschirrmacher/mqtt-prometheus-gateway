@@ -23,7 +23,7 @@ const dateTimeRegEx = new RegExp(regExStr)
 const invalidDateTimeRegEx = new RegExp('(?<!")(' + regExStr + ')(?!")', "g")
 
 export default function (
-  config: MetricsConfiguration,
+  config: MetricsConfiguration[],
   mqtt: MQTT = actualMqtt,
   logger: Logger = console
 ) {
@@ -34,7 +34,7 @@ export default function (
   const auth = user && pwd ? `${user}:${pwd}@` : ""
 
   const client = mqtt.connect(`mqtt://${auth}${brokerName}:${port}`)
-  const topics = unique(config.metrics.map((metric) => metric.topic))
+  const topics = unique(config.map((metric) => metric.topic))
 
   client.on("connect", () => {
     logger.info(`Connection to mqtt://${brokerName}:${port} established`)
