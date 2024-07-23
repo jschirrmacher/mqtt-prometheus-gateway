@@ -29,14 +29,14 @@
     "express": "^4.19.2",
     "mqtt": "^5.8.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.3",
+    "typescript": "^5.5.4",
     "useful-typescript-functions": "4.2.0",
     "yaml": "^2.4.5"
   },
   "devDependencies": {
     "@types/dotenv-flow": "3.3.3",
     "@types/express": "4.17.21",
-    "@vitest/coverage-v8": "^2.0.3",
-    "vitest": "2.0.3"
+    "@vitest/coverage-v8": "^2.0.4",
+    "vitest": "2.0.4"
   }
 }
