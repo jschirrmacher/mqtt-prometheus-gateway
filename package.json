@@ -27,7 +27,7 @@
     "aedes": "^0.51.2",
     "dotenv-flow": "^4.1.0",
     "express": "^4.19.2",
-    "mqtt": "^5.9.0",
+    "mqtt": "^5.9.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4",
     "useful-typescript-functions": "4.2.0",
