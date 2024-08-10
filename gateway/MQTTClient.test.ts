@@ -34,7 +34,7 @@ process.env.MQTT_USER = "my-user"
 process.env.MQTT_PASSWORD = "my-pwd"
 
 function getHandler<T>(which: string) {
-  return on.mock.calls.find((c) => c[0] === which)[1] as T
+  return on.mock.calls.find((c) => c[0] === which)![1] as T
 }
 
 const logger = {
@@ -75,7 +75,7 @@ describe("MQTTClient", () => {
     it("successful subscriptions", () => {
       MQTTClient(config, mqtt, logger)
       getHandler<() => void>("connect")()
-      subscribe.mock.calls.at(0)[1]()
+      subscribe.mock.calls.at(0)![1]()
       expect(logger.info).toBeCalledWith(
         `Topic '/topic1' subscribed, waiting for data...`
       )
@@ -84,7 +84,7 @@ describe("MQTTClient", () => {
     it("subscription errors", () => {
       MQTTClient(config, mqtt, logger)
       getHandler<() => void>("connect")()
-      subscribe.mock.calls.at(0)[1]("test error")
+      subscribe.mock.calls.at(0)![1]("test error")
       expect(logger.error).toBeCalledWith(
         "Subscription of topic '/topic1' failed: \"test error\""
       )

@@ -1,4 +1,4 @@
-FROM node:18-alpine as build
+FROM node:20-alpine AS build
 WORKDIR /app
 ADD . /app
 
@@ -10,7 +10,7 @@ RUN npm ci && \
     mv /app/node_modules /app/dist/* /build && \
     mv /app/package.json /build
 
-FROM node:18-alpine
+FROM node:20-alpine
 WORKDIR /app
 USER node
 COPY --from=build /build /app
