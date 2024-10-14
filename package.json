@@ -11,7 +11,7 @@
     "build": "tsc",
     "docker:build": "docker build -t joschi64/mqtt-prometheus-gateway:latest .",
     "docker:run": "docker run -it -v $(pwd)/config.yaml:/config.yaml -v $(pwd)/.env.local:/app/.env joschi64/mqtt-prometheus-gateway:latest",
-    "update": "npx -y npm-check-updates -d -u -e 2"
+    "update": "npx -y npm-check-updates -du"
   },
   "keywords": [
     "mqtt",
