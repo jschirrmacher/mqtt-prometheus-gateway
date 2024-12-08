@@ -19,4 +19,9 @@ export type MetricsConfiguration = {
 export type Configuration = {
   logLevel?: LogLevel
   metrics: MetricsConfiguration[]
+  MQTT_BROKER: string
+  MQTT_PORT: number
+  MQTT_USER: string
+  MQTT_PASSWORD: string
+  HTTP_PORT: number
 }

@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import MQTTClient, { MQTT } from "./MQTTClient"
-import { MetricsConfiguration } from "./types"
+import { Configuration } from "./types"
 import { metrics } from "./MetricsModel"
 
 const subscribe = vi.fn()
@@ -9,29 +9,31 @@ const mqtt: MQTT = {
   connect: vi.fn().mockReturnValue({ subscribe, on }),
 }
 
-const config: MetricsConfiguration[] = [
-  {
-    name: "test1",
-    description: "A first test metric",
-    type: "gauge",
-    topic: "/topic1",
-    path: "key1",
-    labels: {},
-  },
-  {
-    name: "test2",
-    description: "A second test metric",
-    type: "gauge",
-    topic: "/topic2",
-    path: "key2",
-    labels: {},
-  },
-]
-
-process.env.MQTT_BROKER = "my-broker.localhost"
-process.env.MQTT_PORT = "1234"
-process.env.MQTT_USER = "my-user"
-process.env.MQTT_PASSWORD = "my-pwd"
+const config: Configuration = {
+  MQTT_BROKER: "my-broker.localhost",
+  MQTT_PORT: 1234,
+  MQTT_USER: "my-user",
+  MQTT_PASSWORD: "my-pwd",
+  HTTP_PORT: 5678,
+  metrics: [
+    {
+      name: "test1",
+      description: "A first test metric",
+      type: "gauge",
+      topic: "/topic1",
+      path: "key1",
+      labels: {},
+    },
+    {
+      name: "test2",
+      description: "A second test metric",
+      type: "gauge",
+      topic: "/topic2",
+      path: "key2",
+      labels: {},
+    },
+  ],
+}
 
 function getHandler<T>(which: string) {
   return on.mock.calls.find((c) => c[0] === which)![1] as T
