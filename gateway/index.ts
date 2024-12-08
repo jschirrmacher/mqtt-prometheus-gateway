@@ -10,8 +10,9 @@ async function setup() {
   const config = await readConfig()
   const logger = Logger()
   logger.setLogLevel(config.logLevel || "info")
-  setupMQTTClient(config.metrics, actualMqtt, logger)
+  setupMQTTClient(config, actualMqtt, logger)
   setupServer({
+    port: config.HTTP_PORT,
     routers: [
       defineRouter("/metrics", "metrics").get("/", () => getMetrics(config.metrics)),
     ],
