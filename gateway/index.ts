@@ -12,7 +12,7 @@ async function setup() {
   logger.setLogLevel(config.logLevel || "info")
   setupMQTTClient(config, actualMqtt, logger)
   setupServer({
-    port: config.HTTP_PORT,
+    port: parseInt(config.HTTP_PORT as string),
     routers: [
       defineRouter("/metrics", "metrics").get("/", () => getMetrics(config.metrics)),
     ],

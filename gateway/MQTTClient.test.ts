@@ -11,10 +11,10 @@ const mqtt: MQTT = {
 
 const config: Configuration = {
   MQTT_BROKER: "my-broker.localhost",
-  MQTT_PORT: 1234,
+  MQTT_PORT: "1234",
   MQTT_USER: "my-user",
   MQTT_PASSWORD: "my-pwd",
-  HTTP_PORT: 5678,
+  HTTP_PORT: "5678",
   metrics: [
     {
       name: "test1",
