@@ -2,7 +2,7 @@ import * as actualMqtt from "mqtt"
 import { type MqttClient } from "mqtt"
 import { flatten } from "useful-typescript-functions"
 import { metrics } from "./MetricsModel"
-import { type BaseType, MetricsConfiguration } from "./types"
+import { type BaseType, Configuration } from "./types"
 
 function unique<T>(list: T[]) {
   return [...new Set(list)]
@@ -23,18 +23,18 @@ const dateTimeRegEx = new RegExp(regExStr)
 const invalidDateTimeRegEx = new RegExp('(?<!")(' + regExStr + ')(?!")', "g")
 
 export default function (
-  config: MetricsConfiguration[],
+  config: Configuration,
   mqtt: MQTT = actualMqtt,
   logger: Logger = console
 ) {
-  const user = process.env.MQTT_USER
-  const pwd = process.env.MQTT_PASSWORD
-  const brokerName = process.env.MQTT_BROKER || "localhost"
-  const port = process.env.MQTT_PORT || "1883"
+  const user = config.MQTT_USER
+  const pwd = config.MQTT_PASSWORD
+  const brokerName = config.MQTT_BROKER ?? "localhost"
+  const port = config.MQTT_PORT ?? "1883"
   const auth = user && pwd ? `${user}:${pwd}@` : ""
 
   const client = mqtt.connect(`mqtt://${auth}${brokerName}:${port}`)
-  const topics = unique(config.map((metric) => metric.topic))
+  const topics = unique(config.metrics.map((metric) => metric.topic))
 
   client.on("connect", () => {
     logger.info(`Connection to mqtt://${brokerName}:${port} established`)

@@ -16,11 +16,12 @@ In the meantime, I've added a gas meter sensor, which also uses a ESP8266, but a
 
 ## Configuration
 
-MQTT and HTTP configuration is made in an `.env` file. A template can be found in the root folder. Copy and adapt it to match your own configuration:
+Configuration is made in a `config.yaml` file.
+Settings starting with `MQTT_` and `HTTP_` can also be overwritten via environment variables, e.g. with an `.env` file.
+A sample of such an `.env` file is provides as `.env.sample`.
+You can use that as a starting point by copying/renaming it to `.env` or `.env.local`.
 
-    cp .env.template .env
-
-The configuration about MQTT topic subscriptions and the mapping of topic data to Prometheus metrics is done in `config.yaml`. The file provided contains my own settings and can be adapted as you need it.
+The configuration of MQTT topic subscriptions and the mapping of topic data to Prometheus metrics provided in the delivered `config.yaml` contains my own settings and can be adapted as you need it.
 
 The file is formatted as YAML, containing only one entry "metrics" which contains a list of mappings. Each mapping has the following fields:
 

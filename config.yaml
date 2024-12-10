@@ -1,5 +1,10 @@
 ---
 logLevel: info
+MQTT_BROKER: "my-broker.localhost"
+MQTT_PORT: 1234
+MQTT_USER: "my-user"
+MQTT_PASSWORD: "my-pwd"
+HTTP_PORT: 5678
 metrics:
   - name: electric_meter_total
     description: The total kWh measured by an electric meter
