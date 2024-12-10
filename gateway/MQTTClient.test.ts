@@ -54,6 +54,7 @@ const logger = {
 describe("MQTTClient", () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    Object.keys(metrics).forEach((key) => delete metrics[key])
   })
 
   it("should connect to the configured MQTT Server", () => {
