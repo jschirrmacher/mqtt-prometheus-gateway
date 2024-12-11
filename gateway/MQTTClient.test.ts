@@ -32,6 +32,14 @@ const config: Configuration = {
       path: "key2",
       labels: {},
     },
+    {
+      name: "test3",
+      description: "A third test metric",
+      type: "counter",
+      topic: "vzlogger/data/chn0/raw",
+      path: "",
+      labels: {},
+    },
   ],
 }
 
@@ -48,6 +56,7 @@ const logger = {
 describe("MQTTClient", () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    Object.keys(metrics).forEach((key) => delete metrics[key])
   })
 
   it("should connect to the configured MQTT Server", () => {
@@ -62,6 +71,7 @@ describe("MQTTClient", () => {
     getHandler<() => void>("connect")()
     expect(subscribe).toBeCalledWith("/topic1", expect.any(Function))
     expect(subscribe).toBeCalledWith("/topic2", expect.any(Function))
+    expect(subscribe).toBeCalledWith("vzlogger/data/chn0/raw", expect.any(Function))
   })
 
   it("should set the metrics model with incoming messages", () => {
@@ -71,6 +81,15 @@ describe("MQTTClient", () => {
       getHandler<(topic: string, message: string) => void>("message")
     messageHandler("/topic1", `{"test": 42}`)
     expect(metrics).toEqual({ "/topic1": { test: 42 } })
+  })
+
+  it("should handle single raw values", () => {
+    MQTTClient(config, mqtt, logger)
+    getHandler<() => void>("connect")()
+    const messageHandler =
+      getHandler<(topic: string, message: string) => void>("message")
+    messageHandler("vzlogger/data/chn0/raw", "42")
+    expect(metrics).toEqual({ "vzlogger/data/chn0/raw": { "": 42 } })
   })
 
   describe("should log", () => {
