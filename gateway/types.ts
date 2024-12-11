@@ -16,7 +16,17 @@ export type MetricsConfiguration = {
   labels: LabelList
 }
 
+export const configKeys = [
+  "MQTT_BROKER",
+  "MQTT_PORT",
+  "MQTT_USER",
+  "MQTT_PASSWORD",
+  "HTTP_PORT",
+] as const
+
 export type Configuration = {
   logLevel?: LogLevel
   metrics: MetricsConfiguration[]
+} & {
+  [key in (typeof configKeys)[number]]: string
 }
